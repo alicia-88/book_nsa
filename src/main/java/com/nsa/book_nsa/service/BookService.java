@@ -37,6 +37,8 @@ public class BookService {
     public Book updateBook(Book bookDetails) {
         Book updatedBook = getBookById(bookDetails.getId());
         if (updatedBook != null) {
+            updatedBook.setTitle(bookDetails.getTitle());
+            updatedBook.setIsbn(bookDetails.getIsbn());
             updatedBook.setPrice(bookDetails.getPrice());
             updatedBook.setCoverImage(bookDetails.getCoverImage());
             return bookRepository.save(updatedBook);
