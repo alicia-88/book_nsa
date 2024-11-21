@@ -3,6 +3,7 @@ package com.nsa.book_nsa.controller;
 import com.nsa.book_nsa.model.Book;
 import com.nsa.book_nsa.service.BookService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,20 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchBooks(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String category) {
+        List<Book> books = bookService.searchBook(title, author, category);
+        return ResponseEntity.ok(books);
+    }
+
     @GetMapping
     public ResponseEntity<?> getAllBooks() {
         List<Book> books = bookService.getAllBooks();
