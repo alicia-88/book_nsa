@@ -3,10 +3,11 @@
 *.jar
 *.war
 *.log
-
+.settings/
 /.idea/
 /*.iml
 /.vscode/
-
+*.project
+*.classpath
 application.properties
 .env
