@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/categories") 
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
     @Autowired
@@ -34,15 +34,17 @@ public class CategoryController {
     // Créer une nouvelle catégorie
     @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        Category savedCategory = categoryRepository.save(category);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
+        System.out.printf(category.getName());
+        return ResponseEntity.ok(category);
+//        Category savedCategory = categoryRepository.save(category);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
 
     // Mettre à jour une catégorie existante
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category categoryDetails) {
         return categoryRepository.findById(id).map(category -> {
-            category.setCategory(categoryDetails.getCategory());
+            category.setName(categoryDetails.getName());
             Category updatedCategory = categoryRepository.save(category);
             return ResponseEntity.ok(updatedCategory);
         }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());

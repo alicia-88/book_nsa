@@ -1,17 +1,24 @@
 package com.nsa.book_nsa.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
-@Table(name= "Category")
+@Table(name= "category")
 public class Category {
 
 	
 	@Id
-	@GeneratedValue
-	private Long cat_id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name ="cat_id")
+	private Long id;
+
+	@OneToMany(mappedBy = "category")
+	@JsonManagedReference
+	private List<Book> books;
 	
 	@Column(name = "cat_name", nullable = false)
 	private String name;
@@ -20,32 +27,38 @@ public class Category {
 	public Category() {
 	}
 	
-	public Category(Long id, String category) {
+	public Category(Long id, String name) {
 		super();
-		cat_id = id;
-		this.name = category;
+		this.id= id;
+		this.name = name;
 	}
 
 
 	public Long getId() {
-		return cat_id;
+		return id;
 	}
 
 
 	public void setId(Long id) {
-		cat_id = id;
+		this.id = id;
 	}
 
 
-	public String getCategory() {
+	public String getName() {
 		return name;
 	}
 
 
-	public void setCategory(String category) {
-		this.name = category;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	
-	
+
+
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
 }

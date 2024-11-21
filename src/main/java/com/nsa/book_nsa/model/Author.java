@@ -1,21 +1,26 @@
 package com.nsa.book_nsa.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.validation.constraints.*;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Author") // Associe cette classe à la table SQL "Author"
-public class Author {
+@Table(name = "author") // Associe cette classe à la table SQL "Author"
+public class Author  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrémentation
 	@Column(name = "aut_id")
 	private int id;
-
+	@OneToMany(mappedBy = "author")
+	@JsonManagedReference
+	private List<Book> books;
 	@NotNull 
 	@Column(name = "aut_lastname", nullable = false, length = 250)
 	@NotBlank(message = "Last name cannot be blank") // Non vide et non nul
@@ -92,10 +97,18 @@ public class Author {
 		this.nationality = nationality;
 	}
 
-	// Méthode toString pour afficher l'objet sous forme de chaîne
-	@Override
-	public String toString() {
-		return "Author{" + "id=" + id + ", lastName='" + lastName + '\'' + ", firstName='" + firstName + '\''
-				+ ", birthDate=" + birthDate + ", nationality='" + nationality + '\'' + '}';
+	public List<Book> getBooks() {
+		return books;
 	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+
+	// Méthode toString pour afficher l'objet sous forme de chaîne
+//	@Override
+//	public String toString() {
+//		return "Author{" + "id=" + id + ", lastName='" + lastName + '\'' + ", firstName='" + firstName + '\''
+//				+ ", birthDate=" + birthDate + ", nationality='" + nationality + '\'' + '}';
+//	}
 }

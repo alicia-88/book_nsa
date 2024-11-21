@@ -19,13 +19,13 @@ import com.nsa.book_nsa.service.AuthorService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/authors")
+@RequestMapping("/api/v1/authors")
 public class AuthorController {
 
 	@Autowired
 	private AuthorService authorService;
 
-	@PostMapping
+	@PostMapping(consumes = "application/json", produces = "application/json")
 	public ResponseEntity<?> createAuthor(@Valid @RequestBody Author author) {
 		Author savedAuthor = authorService.createAuthor(author);
 		return ResponseEntity.ok(savedAuthor);

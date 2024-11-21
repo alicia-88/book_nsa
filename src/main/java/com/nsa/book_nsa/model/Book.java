@@ -4,18 +4,19 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.validation.constraints.*;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "book", uniqueConstraints = {@UniqueConstraint(columnNames = {"book_isbn"})})
-public class Book {
+public class Book  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "book_title", nullable = false)
-    @NotBlank(message ="Le nom du livre est obligatoire.")
+    @NotBlank(message = "Le nom du livre est obligatoire.")
     private String title;
 
     @Column(name = "book_synopsis")
@@ -35,16 +36,20 @@ public class Book {
     @Size(min = 10, max = 13, message = "L'ISBN doit être de 10 ou 13 caractères.")
     private String isbn;
 
-//    @ManyToOne
-//    @JoinColumn(name = "aut_id", nullable = false)
-//    @JsonBackReference
-//    private Author author;
+    @ManyToOne
+    @JoinColumn(name = "aut_id", nullable = false)
+    @JsonBackReference
+    private Author author;
 
+    @ManyToOne
+    @JoinColumn(name = "cat_id", nullable = false)
+    @JsonBackReference
+    private Category category;
 
     public Book() {
     }
 
-    public Book(Long id, String title, String synopsis, Double price, Date releaseYear, String coverImage, String isbn) {
+    public Book(Long id, String title, String synopsis, Double price, Date releaseYear, String coverImage, String isbn, Author author, Category category) {
         this.id = id;
         this.title = title;
         this.synopsis = synopsis;
@@ -52,6 +57,8 @@ public class Book {
         this.releaseYear = releaseYear;
         this.coverImage = coverImage;
         this.isbn = isbn;
+        this.author = author;
+        this.category = category;
     }
 
     public void setId(Long id) {
@@ -61,39 +68,51 @@ public class Book {
     public Long getId() {
         return id;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
     }
+
     public String getSynopsis() {
         return synopsis;
     }
+
     public void setPrice(Double price) {
         this.price = price;
     }
+
     public Double getPrice() {
         return price;
     }
+
     public void setReleaseYear(Date releaseYear) {
         this.releaseYear = releaseYear;
     }
+
     public Date getReleaseYear() {
         return releaseYear;
     }
+
     public void setCoverImage(String coverImage) {
         this.coverImage = coverImage;
     }
+
     public String getCoverImage() {
         return coverImage;
     }
+
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
     public String getIsbn() {
         return isbn;
     }
