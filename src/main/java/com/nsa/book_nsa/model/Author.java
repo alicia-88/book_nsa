@@ -19,7 +19,7 @@ public class Author  {
 	@Column(name = "aut_id")
 	private int id;
 	@OneToMany(mappedBy = "author")
-	@JsonManagedReference
+	@JsonManagedReference(value = "author-books")
 	private List<Book> books;
 	@NotNull 
 	@Column(name = "aut_lastname", nullable = false, length = 250)

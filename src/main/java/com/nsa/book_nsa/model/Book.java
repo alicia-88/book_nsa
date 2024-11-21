@@ -1,6 +1,7 @@
 package com.nsa.book_nsa.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.*;
 import jakarta.persistence.*;
 
@@ -38,19 +39,18 @@ public class Book  {
 
     @ManyToOne
     @JoinColumn(name = "aut_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "author-books")
     private Author author;
 
     @ManyToOne
     @JoinColumn(name = "cat_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "category-books")
     private Category category;
 
     public Book() {
     }
 
-    public Book(Long id, String title, String synopsis, Double price, Date releaseYear, String coverImage, String isbn, Author author, Category category) {
-        this.id = id;
+    public Book(String title, String synopsis, Double price, Date releaseYear, String coverImage, String isbn, Author author, Category category) {
         this.title = title;
         this.synopsis = synopsis;
         this.price = price;
@@ -117,4 +117,19 @@ public class Book  {
         return isbn;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

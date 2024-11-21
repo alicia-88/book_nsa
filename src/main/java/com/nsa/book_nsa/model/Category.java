@@ -16,8 +16,8 @@ public class Category {
 	@Column(name ="cat_id")
 	private Long id;
 
-	@OneToMany(mappedBy = "category")
-	@JsonManagedReference
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference(value = "category-books")
 	private List<Book> books;
 	
 	@Column(name = "cat_name", nullable = false)

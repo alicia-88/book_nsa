@@ -34,10 +34,8 @@ public class CategoryController {
     // Créer une nouvelle catégorie
     @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        System.out.printf(category.getName());
-        return ResponseEntity.ok(category);
-//        Category savedCategory = categoryRepository.save(category);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
+        Category savedCategory = categoryRepository.save(category);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
 
     // Mettre à jour une catégorie existante
