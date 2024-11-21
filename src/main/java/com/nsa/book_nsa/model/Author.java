@@ -1,7 +1,10 @@
 package com.nsa.book_nsa.model;
 
-import java.util.Date;
+
 import jakarta.validation.constraints.*;
+
+import java.sql.Date;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -25,7 +28,7 @@ public class Author {
 	private String firstName;
 	
 	@Column(name = "aut_birtdate", nullable = false)
-	@NotBlank(message = "Birth date cannot be null")
+//	@NotBlank(message = "Birth date cannot be null")
 	@Past(message = "Birth date must be in the past") // Doit être une date passée
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
