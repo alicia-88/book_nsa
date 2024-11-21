@@ -11,3 +11,39 @@
 *.classpath
 application.properties
 .env
+# Fichiers et dossiers spécifiques à Eclipse
+/.settings/
+/.project
+/.classpath
+
+# Fichiers et dossiers spécifiques à IntelliJ IDEA
+
+/*.ipr
+/*.iws
+/out/
+
+# Fichiers et dossiers spécifiques à Visual Studio Code
+
+
+# Ignorer les fichiers générés par Maven et Gradle
+
+/build/
+
+# Fichiers système et temporaires
+.DS_Store
+Thumbs.db
+
+# Logs
+
+
+# Fichiers de configuration temporaire
+*.bak
+*.tmp
+
+# Fichiers système liés aux tests et artefacts
+/test-output/
+/hs_err_pid*.log
+
+# Fichiers spécifiques à votre environnement
+
+*.local
