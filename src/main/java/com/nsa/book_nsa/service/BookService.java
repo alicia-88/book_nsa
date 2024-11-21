@@ -19,12 +19,12 @@ public class BookService {
         if(title != null ) {
             return bookRepository.findByTitleContainingIgnoreCase(title);
         }
-        if(author != null ) {
-            return bookRepository.findByAuthorContainingIgnoreCase(author);
-        }
-        if(category != null ) {
-            return bookRepository.findByCategoryContainingIgnoreCase(category);
-        }
+//        if(author != null ) {
+//            return bookRepository.findByAuthorContainingIgnoreCase(author);
+//        }
+//        if(category != null ) {
+//            return bookRepository.findByCategoryContainingIgnoreCase(category);
+//        }
         throw new IllegalArgumentException("Au moins un paramètre de recherche doit être fourni.");
     }
 
