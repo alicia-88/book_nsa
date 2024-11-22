@@ -2,6 +2,7 @@ package com.nsa.book_nsa.controller;
 
 import java.util.List;
 
+import com.nsa.book_nsa.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,13 +33,13 @@ public class AuthorController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> UpdateAuthor(@PathVariable("id") int id ,  @Valid @RequestBody Author author) {
+	public ResponseEntity<?> UpdateAuthor(@PathVariable("id") Long id ,  @Valid @RequestBody Author author) {
 		Author updateAuthor = authorService.getAuthorById(id);
 		if (updateAuthor != null) {
 			authorService.updateAuthor(author.getId(), author);
 			return ResponseEntity.ok(author);
 		} else {
-			return ResponseEntity.notFound().build();
+			throw new NotFoundException("author",id);
 		}
 		
 	}
@@ -50,13 +51,13 @@ public class AuthorController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getAuthorById(@PathVariable int id) {
+	public ResponseEntity<?> getAuthorById(@PathVariable Long id) {
 		Author author = authorService.getAuthorById(id);
 		return (author != null) ? ResponseEntity.ok(author) : ResponseEntity.notFound().build();
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteAuthor(@PathVariable int id) {
+	public ResponseEntity<?> deleteAuthor(@PathVariable Long id) {
 		Author author = authorService.getAuthorById(id);
 		if (author != null) {
 			authorService.deleteAuthor(id);

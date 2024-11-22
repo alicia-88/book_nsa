@@ -1,6 +1,9 @@
 package com.nsa.book_nsa.controller;
 
+import com.nsa.book_nsa.exception.NotFoundException;
+import com.nsa.book_nsa.model.Author;
 import com.nsa.book_nsa.model.Book;
+import com.nsa.book_nsa.service.AuthorService;
 import com.nsa.book_nsa.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,9 +17,11 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final AuthorService authorService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
+        this.authorService = authorService;
     }
 
     @GetMapping("/search")
@@ -42,13 +47,17 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<?> addBook(@RequestBody Book book) {
+        Author findAuthor = authorService.getAuthorById(book.getAuthor().getId());
+        if(findAuthor == null) {
+            throw new NotFoundException("author", book.getAuthor().getId());
+        }
         Book createdBook = bookService.addBook(book);
         return ResponseEntity.status(201).body(createdBook);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateBook(@Valid @RequestBody Book book) {
-        Book updatedBook = bookService.updateBook(book);
+    public ResponseEntity<?> updateBook(@PathVariable("id") Long id,@Valid @RequestBody Book book) {
+        Book updatedBook = bookService.updateBook(id, book);
         return ResponseEntity.ok(updatedBook);
     }
 

@@ -1,5 +1,6 @@
 package com.nsa.book_nsa.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.nsa.book_nsa.model.Author;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, Integer> {
-
+public interface AuthorRepository extends JpaRepository<Author, Long> {
+    Boolean existsByFirstNameAndLastNameAndBirthDate(String firstName, String lastName, Date birthDate);
     // Méthodes personnalisées (si nécessaires)
 
     // Trouver un auteur par son nom de famille

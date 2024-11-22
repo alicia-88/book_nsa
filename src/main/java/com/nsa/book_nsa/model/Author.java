@@ -17,7 +17,7 @@ public class Author  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrémentation
 	@Column(name = "aut_id")
-	private int id;
+	private Long id;
 	@OneToMany(mappedBy = "author")
 	@JsonManagedReference(value = "author-books")
 	private List<Book> books;
@@ -28,12 +28,12 @@ public class Author  {
 	private String lastName;
 
 	@Column(name = "aut_firstname", nullable = false, length = 250)
-	@NotBlank(message = "First name cannot be blank")
+	@NotBlank(message = "First name cannot be blank 123")
 	@Size(max = 250, message = "First name must be at most 250 characters")
 	private String firstName;
 	
 	@Column(name = "aut_birtdate", nullable = false)
-//	@NotBlank(message = "Birth date cannot be null")
+    @NotNull(message = "Birth date cannot be null")
 	@Past(message = "Birth date must be in the past") // Doit être une date passée
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
@@ -57,11 +57,11 @@ public class Author  {
 
 	// Getters et Setters
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

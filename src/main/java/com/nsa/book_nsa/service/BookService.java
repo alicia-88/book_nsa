@@ -47,8 +47,8 @@ public class BookService {
         }
     }
 
-    public Book updateBook(Book bookDetails) {
-        Book updatedBook = getBookById(bookDetails.getId());
+    public Book updateBook(Long id, Book bookDetails) {
+        Book updatedBook = getBookById(id);
         if (updatedBook != null) {
             updatedBook.setTitle(bookDetails.getTitle());
             updatedBook.setIsbn(bookDetails.getIsbn());
