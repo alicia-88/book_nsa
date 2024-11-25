@@ -45,6 +45,10 @@ public class Book  {
     @JsonBackReference(value = "category-books")
     private Category category;
 
+    @OneToMany(mappedBy = "book")
+    private List<Stock> stocks;
+
+
     public Book() {
     }
 
