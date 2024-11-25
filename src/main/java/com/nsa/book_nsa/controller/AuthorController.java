@@ -34,13 +34,9 @@ public class AuthorController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> UpdateAuthor(@PathVariable("id") Long id ,  @Valid @RequestBody Author author) {
-		Author updateAuthor = authorService.getAuthorById(id);
-		if (updateAuthor != null) {
-			authorService.updateAuthor(author.getId(), author);
-			return ResponseEntity.ok(author);
-		} else {
-			throw new NotFoundException("author",id);
-		}
+		
+		Author updateAuthor = authorService.updateAuthor(id, author);
+		return ResponseEntity.ok(updateAuthor);
 		
 	}
 
@@ -53,16 +49,12 @@ public class AuthorController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getAuthorById(@PathVariable Long id) {
 		Author author = authorService.getAuthorById(id);
-		return (author != null) ? ResponseEntity.ok(author) : ResponseEntity.notFound().build();
+		return ResponseEntity.ok(author);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteAuthor(@PathVariable Long id) {
-		Author author = authorService.getAuthorById(id);
-		if (author != null) {
-			authorService.deleteAuthor(id);
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.notFound().build();
+		authorService.deleteAuthor(id);
+		return ResponseEntity.noContent().build();
 	}
 }
