@@ -7,33 +7,35 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "book", uniqueConstraints = {@UniqueConstraint(columnNames = {"book_isbn"})})
 public class Book  {
 
     @Id
+    @Column(name = "boo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "book_title", nullable = false)
+    @Column(name = "boo_title", nullable = false)
     @NotBlank(message = "Le nom du livre est obligatoire.")
     private String title;
 
-    @Column(name = "book_synopsis")
+    @Column(name = "boo_synopsis")
     private String synopsis;
 
-    @Column(name = "book_price")
+    @Column(name = "boo_price")
     @DecimalMin(value = "0.0", message = "Le prix doit être supérieur à 0.")
     private Double price;
 
-    @Column(name = "book_release_year")
+    @Column(name = "boo_release_year")
     private Date releaseYear;
 
-    @Column(name = "book_cover_image")
+    @Column(name = "boo_cover_image")
     private String coverImage;
 
-    @Column(name = "book_isbn", unique = true, nullable = false)
+    @Column(name = "boo_isbn", unique = true, nullable = false)
     @Size(min = 10, max = 13, message = "L'ISBN doit être de 10 ou 13 caractères.")
     private String isbn;
 
@@ -46,6 +48,10 @@ public class Book  {
     @JoinColumn(name = "cat_id", nullable = false)
     @JsonBackReference(value = "category-books")
     private Category category;
+
+    @OneToMany(mappedBy = "book")
+    private List<Stock> stocks;
+
 
     public Book() {
     }
@@ -131,5 +137,11 @@ public class Book  {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+    public List<Stock> getStocks() {
+        return stocks;
+    }
+    public void setStocks(List<Stock> stocks) {
+        this.stocks = stocks;
     }
 }
