@@ -35,10 +35,6 @@ public class Book  {
     @Column(name = "boo_cover_image")
     private String coverImage;
 
-    @Column(name = "book_isbn", unique = true, nullable = false)
-    @Size(min = 10, max = 13, message = "L'ISBN doit être de 10 ou 13 caractères.")
-    private String isbn;
-
     @ManyToOne
     @JoinColumn(name = "aut_id", nullable = false)
     @JsonBackReference(value = "author-books")
@@ -48,10 +44,6 @@ public class Book  {
     @JoinColumn(name = "cat_id", nullable = false)
     @JsonBackReference(value = "category-books")
     private Category category;
-
-    @OneToMany(mappedBy = "book")
-    private List<Stock> stocks;
-
 
     public Book() {
     }
@@ -129,4 +121,5 @@ public class Book  {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 }
