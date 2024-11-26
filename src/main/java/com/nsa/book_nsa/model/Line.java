@@ -3,6 +3,7 @@ package com.nsa.book_nsa.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "line")
 public class Line {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +21,7 @@ public class Line {
     private Book book;
 
     @ManyToOne
-    @JoinColumn(name = "ord_id", nullable = false)
+    @JoinColumn(name = "ord_id", nullable = false, referencedColumnName = "ord_id")
     private Order order;
 
     public Line() {
