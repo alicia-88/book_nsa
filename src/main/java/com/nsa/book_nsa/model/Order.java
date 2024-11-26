@@ -6,12 +6,20 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
+<<<<<<< develop
 @Table(name = "order")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ord_id")
+=======
+public class Order {
+
+    @Id
+    @Column(name = "ord_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+>>>>>>> ajout class order et line
     private Long id;
 
     @Column(name = "ord_date")
