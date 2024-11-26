@@ -6,11 +6,12 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "order")
 public class Order {
 
     @Id
-    @Column(name = "ord_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ord_id")
     private Long id;
 
     @Column(name = "ord_date")
