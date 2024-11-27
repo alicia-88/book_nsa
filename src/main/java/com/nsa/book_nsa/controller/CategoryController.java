@@ -35,8 +35,7 @@ public class CategoryController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable("id") Long id) {
-        Category category = categoryService.getCategoryById(id)
-                .orElseThrow(() -> new RuntimeException("Catégorie introuvable avec l'ID : " + id));
+        Category category = categoryService.getCategoryById(id);
         return ResponseEntity.ok(category);
     }
 
