@@ -86,4 +86,9 @@ public class Category {
                 ", books=" + books.size() +
                 '}';
     }
+
+	public Category orElseThrow(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
