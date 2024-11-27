@@ -1,13 +1,11 @@
 package com.nsa.book_nsa.service;
 
-import com.nsa.book_nsa.exception.DuplicateException;
 import com.nsa.book_nsa.exception.NotFoundException;
 import com.nsa.book_nsa.model.Book;
 import com.nsa.book_nsa.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -40,10 +38,6 @@ public class BookService {
     public Book addBook(Book bookDetails) {
         authorService.getAuthorById(bookDetails.getAuthor().getId());
         categoryService.getCategoryById(bookDetails.getCategory().getId());
-        Book book = bookRepository.findByIsbn(bookDetails.getIsbn());
-        if (book != null) {
-            throw new DuplicateException("book", book.getId());
-        }
         return bookRepository.save(bookDetails);
     }
 
@@ -57,7 +51,6 @@ public class BookService {
         authorService.getAuthorById(bookDetails.getAuthor().getId());
         categoryService.getCategoryById(bookDetails.getCategory().getId());
         updatedBook.setTitle(bookDetails.getTitle());
-        updatedBook.setIsbn(bookDetails.getIsbn());
         updatedBook.setPrice(bookDetails.getPrice());
         updatedBook.setCoverImage(bookDetails.getCoverImage());
         return bookRepository.save(updatedBook);
