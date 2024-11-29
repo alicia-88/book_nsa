@@ -33,8 +33,8 @@ public class User {
 	@NotBlank(message = "Le role doit etre renseigné")
 	private String role;
 
-	@Column(name = "use_birthday", nullable = false)
-	@NotNull(message = "La date d'anniversaire doit etre renseigné")
+	@Column(name = "use_birthday")
+//	@NotNull(message = "La date d'anniversaire doit etre renseigné")
 	private Date birthday;
 
 	@Column(name = "use_email", length = 255, nullable = false)

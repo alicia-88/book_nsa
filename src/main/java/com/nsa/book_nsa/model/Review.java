@@ -14,7 +14,7 @@ public class Review {
 	private Long id;
 
 	@Column(name = "rev_date")
-	@NotBlank(message = "La date doit etre renseigné")
+	@NotNull(message = "La date doit etre renseigné")
 	private Date date;
 
 	@Column(name = "rev_post", length = 255, nullable = false)
@@ -22,7 +22,7 @@ public class Review {
 	private String post;
 
 	@Column(name = "rev_rating", nullable = false)
-	@NotBlank(message = "La note doit etre renseigné")
+	@NotNull(message = "La note doit etre renseigné")
 	@Min(value = 1, message = "La valeur minimum doit etre 1")
 	@Max(value = 1, message = "La valeur minimum doit etre 1")
 	private int rating;
