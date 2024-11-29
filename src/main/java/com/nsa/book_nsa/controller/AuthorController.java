@@ -5,6 +5,7 @@ import java.util.List;
 import com.nsa.book_nsa.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,9 @@ public class AuthorController {
 	@Autowired
 	private AuthorService authorService;
 
+
 	@PostMapping(consumes = "application/json", produces = "application/json")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> createAuthor(@Valid @RequestBody Author author) {
 		Author savedAuthor = authorService.createAuthor(author);
 		return ResponseEntity.ok(savedAuthor);
@@ -53,6 +56,7 @@ public class AuthorController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> deleteAuthor(@PathVariable Long id) {
 		authorService.deleteAuthor(id);
 		return ResponseEntity.noContent().build();

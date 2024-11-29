@@ -1,32 +1,39 @@
 package com.nsa.book_nsa.model;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User {
+public class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "use_id")
 	private Long id;
 
-	@Column(name = "use_firstname", nullable = false)
-	@NotBlank(message = "Le prénom doit etre renseigné")
+	@Column(name = "use_username", nullable = false, unique = true)
+	@NotBlank(message = "Le pseudo ne doit pas être nul")
+	private String username;
+
+	@Column(name = "use_firstname")
 	private String firstname;
 
-	@Column(name = "use_lastname", nullable = false)
-	@NotBlank(message = "Le nom doit etre renseigné")
+	@Column(name = "use_lastname")
 	private String lastname;
 
 	@Column(name = "use_role", nullable = false)
@@ -34,17 +41,17 @@ public class User {
 	private String role;
 
 	@Column(name = "use_birthday")
-//	@NotNull(message = "La date d'anniversaire doit etre renseigné")
 	private Date birthday;
 
-	@Column(name = "use_email", length = 255, nullable = false)
+	@Column(name = "use_email", length = 255, nullable = false, unique = true)
 	@NotBlank(message = "L'email doit etre renseigné")
-	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Adresse email invalide")
+	@Email(message = "Adresse email valide")
 	private String email;
 
 	@Column(name = "use_password", length = 255, nullable = false)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
-	
+
 	@OneToMany(mappedBy = "user")
 	private List<Review> reviews;
 	public User() {
@@ -109,8 +116,18 @@ public class User {
 		this.email = email;
 	}
 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of();
+	}
+
 	public String getPassword() {
 		return password;
+	}
+
+	@Override
+	public String getUsername() {
+		return "";
 	}
 
 	public void setPassword(String password) {
