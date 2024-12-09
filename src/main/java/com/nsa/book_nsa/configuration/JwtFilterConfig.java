@@ -1,9 +1,22 @@
 package com.nsa.book_nsa.configuration;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.nsa.book_nsa.service.AuthService;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-public class JwtFilterConfig {
+import java.io.IOException;
+
+@Component
+public class JwtFilterConfig extends OncePerRequestFilter {
     @Autowired
     private AuthService authService;
     @Autowired
@@ -20,8 +33,8 @@ public class JwtFilterConfig {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token in Bearer Header");
             }else {
                 try{
-                    String email = jwtUtil.validateTokenAndRetrieveSubject(jwt);
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+                    String email = jwtConfig.validateTokenAndRetrieveSubject(jwt);
+                    UserDetails userDetails = authService.loadUserByUsername(email);
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(email, userDetails.getPassword(), userDetails.getAuthorities());
                     if(SecurityContextHolder.getContext().getAuthentication() == null){
